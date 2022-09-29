@@ -437,7 +437,7 @@ sor(A,   b,  w,   init,    iter):=block(
 	    for i:1 thru iter do 
 	    (
 	        x1:Tsor.x0+csor,
-	        disp(i, "----", x1),
+	        disp(i, "----", transpose(x1)),
 	        x0:x1
 	    )
 );
