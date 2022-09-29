@@ -294,7 +294,7 @@ luFactor(A):=block
 
 solve_by_lu(A,    b):=block
 	(
-	    [n,    L,   U,   z,   x,  ans1,   i,    j],
+	    [n,    L,   U,   z,   x,  ans1,   i,    j,   k],
 	    n:matrix_size(A)[1], 
 	    L:rhs(luFactor(A)[1]),
 	    U:rhs(luFactor(A)[2]),
@@ -308,14 +308,13 @@ solve_by_lu(A,    b):=block
 	    ),
 	
 	    x[n]:z[n]/U[n][n],
-	    for i:n-1 thru 1 step -1 do
+	    for k:n-1 thru 1 step -1 do
 	    (
-	        x[i]:(z[i]-sum(U[i][j]*x[j],    j,   i+1,    n))/U[i][i]
+	        x[k]:(z[k]-sum(U[k][j]*x[j],    j,   k+1,    n))/U[k][k]
 	    ),
 	    
 	    ans1:['z=z,  'x=x ]            
 );
-
 
 /***********************************************************************
 
