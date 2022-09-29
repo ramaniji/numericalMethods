@@ -643,10 +643,10 @@ T(g,   a,   b):=block
 
 
 
-Tc(g1,   a,   b,   n):=block
+Tc(g,   a,   b,   n):=block
 	(
-	    [f,   x,   h,  s,  i,  ans],
-	    define(f(x),    g1),
+	    [x,   h,  s,  i,  ans],
+	    define(f(x),    g),
 	    h:(b-a)/n,
 	    s:0.0,
 	    for i:1 thru n-1 do s:s+f(a+i*h),
