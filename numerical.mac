@@ -117,7 +117,7 @@ For comments, suggestions and the like, feel free to contact the author at
  
  bisect(g,   a,   b,   kmax,   e):=block(
  
- 	    [ya,  yb,  ym,  err,  iter,  m,   k],
+ 	    [ya,  yb,  ym,  err,  iter,  m,   k,  x],
 	    define(f(x),  g), 
 	    ya:f(a),
 	    yb:f(b),
