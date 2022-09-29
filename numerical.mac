@@ -673,7 +673,7 @@ Tc(g,   a,   b,   n):=block
 
 S(g,   a,   b):=block
 	(
-	    [f,  x],
+	    [x],
 	    define(f(x),    g),
 	    return( ((b-a)/6)*(f(a)+ (4*f((a+b)/2)) + f(b)))
 );
@@ -691,11 +691,11 @@ S(g,   a,   b):=block
 
 **********************************************************************/
 
-Sc(g1,   a,   b,   n):=block
+Sc(g,   a,   b,   n):=block
 	(
 	    [m,   h,   odd,   even,  i,  ans],
 	    m:n/2,
-	    define(f(x),    g1),
+	    define(f(x),    g),
 	    h:(b-a)/n,
 	    odd:0.0,
 	    even:0.0,
