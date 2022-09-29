@@ -333,7 +333,7 @@ solve_by_lu(A,    b):=block
 
 gauss_jacobi(A,   b,    init,    iter):=block(
 	    
-	    [i,  j,  n,  l,  L,  u,  U,  d,   D,  D1,   Tgj,  cgj,   x0],
+	    [i,  j,  n,  l,  L,  u,  U,  d,   D,  D1,   Tgj,  cgj,   x0,  x1],
 	    n:matrix_size(A)[1],
 	    for i:1 thru n do
 	    (
@@ -395,7 +395,7 @@ gauss_jacobi(A,   b,    init,    iter):=block(
 
 sor(A,   b,  w,   init,    iter):=block(
 
-	    [i,  j,   n,  l,   u,  L,  U,   d,   D,  D3,  N,  Tsor,  csor,  x0],
+	    [i,  j,   n,  l,   u,  L,  U,   d,   D,  D3,  N,  Tsor,  csor,  x0,  x1],
 	    n:matrix_size(A)[1],
 	    
 	    for i:1 thru n do
@@ -461,7 +461,7 @@ sor(A,   b,  w,   init,    iter):=block(
 
 gauss_seidel(A,    b,   init,    iter):=block(
 
-	    [i,   j,   n,   l,   L,   u,   U,   d,   D,   D2,   Tgs,  cgs,  x0],
+	    [i,   j,   n,   l,   L,   u,   U,   d,   D,   D2,   Tgs,  cgs,  x0,  x1],
 	    n:matrix_size(A)[1],
 	    for i:1 thru n do
 	    (
