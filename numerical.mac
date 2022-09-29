@@ -581,7 +581,7 @@ dd_table(a,   f):=block
 
 NP(a,    f,   x):=block(
 	    
-	        [i,   j,   s,   A,   table],
+	        [i,   j,   s,   A,   table,   n,   sum1],
 	        n:length(a),
 	        for i:1 thru n do A[i,  1]:a[i],
 	        for i:1 thru n do A[i,  2]:f[i],
@@ -593,12 +593,12 @@ NP(a,    f,   x):=block(
 	        ),
 	        table:genmatrix(A,   n,   n+1),
 	        
-	        sum:table[1,   2],
+	        sum1:table[1,   2],
 	        for i:3 thru n+1 do 
 	        (
-	            sum:sum+( table[1,   i]*product((x-table[k,   1]),    k,     1,     i-2)     )
+	            sum1:sum1+( table[1,   i]*product((x-table[k,   1]),    k,     1,     i-2)     )
 	        ),
-	        return(sum)
+	        return(sum1)
 );
 
 
