@@ -606,12 +606,7 @@ NP(a,    f,   x):=block(
 
 
    
-(%i1)  f1(x):=1/x;
-	a:1.0;
-	b:2.0;
-	t:T(f1(x),    a,    b);
-	v:integrate(f1(x),    x,    a,   b);
-	e:abs(v-t);
+(%i1)  T(1/x,    1.0,    2.0);
 	
 
 
@@ -630,12 +625,12 @@ T(g,   a,   b):=block
 
 
    
-(%i1) num:makelist(2^j,    j,    0,    7);
+(%i1) for k:2 next 2*k thru 150 do block(
+    		temp:Tc(sin(x),   0,   %pi,   k),
+    		print(k, "      ", temp)
+    	);
 
-(%i2)	for k in num do block(
-	    temp:Tc(sin(x),   0,   %pi,   k),
-	    print(k, "      ", temp)
-	    );
+
 
 
 
@@ -659,12 +654,7 @@ Tc(g,   a,   b,   n):=block
 
 
    
-(%i1)   f1(x):=1/x;
-	a:1.0;
-	b:2.0;
-	s:S(f1(x),    a,    b);
-	v:integrate(f1(x),    x,    a,   b);
-	e:abs(v-s);
+(%i1)   S(1/x,    1.0,    2.0);
 
 
 
@@ -684,8 +674,8 @@ S(g,   a,   b):=block
 
    
 (%i1) for k:2 next 2*k thru 150 do block(
-    	temp:Sc(sin(x),   0,   %pi,   k),
-    	print(k, "      ", temp)
+    		temp:Sc(sin(x),   0,   %pi,   k),
+    		print(k, "      ", temp)
     	);
 
 
