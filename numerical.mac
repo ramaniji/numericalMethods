@@ -116,10 +116,12 @@ For comments, suggestions and the like, feel free to contact the author at
  
  
  bisect(g,   a,   b,   kmax,   e):=block(
+ 
  	    [ya,  yb,  ym,  err,  iter,  k],
-	   define(f(x),  g), 
+	    define(f(x),  g), 
 	    ya:f(a),
 	    yb:f(b),
+	    
 	    if(signum(ya)=signum(yb)) then ( print("fn has same sign at end points"))
 	    else
 	    (
@@ -153,7 +155,7 @@ For comments, suggestions and the like, feel free to contact the author at
 
  newton(g,   x0,   e,  d,  Nmax):=block
 	(
-	    [p,  x1,   i],
+	    [p,  x1,   i,  f,   x,  df],
 	    define(f(x),   g),
 	    define(df(x),  diff(f(x),  x)),
 	    for i:1 thru Nmax do
@@ -182,7 +184,7 @@ For comments, suggestions and the like, feel free to contact the author at
 
 secant(g,   a,   b,   e,  Nmax):=block
 	(
-	    [fa,  fb,  d,  t,  t1 ],
+	    [fa,  fb,  d,  t,  t1,  i],
 	    define(f(x),   g),
 	    fa:f(a),
 	    fb:f(b),
@@ -292,7 +294,7 @@ luFactor(A):=block
 
 solve_by_lu(A,    b):=block
 	(
-	    [n,    i,    j],
+	    [n,    L,   U,   z,   x,  ans1,   i,    j],
 	    n:matrix_size(A)[1], 
 	    L:rhs(luFactor(A)[1]),
 	    U:rhs(luFactor(A)[2]),
@@ -330,6 +332,8 @@ solve_by_lu(A,    b):=block
 
 
 gauss_jacobi(A,   b,    init,    iter):=block(
+	    
+	    [i,  j,  n,  l,  L,  u,  U,  d,   D,  D1,   Tgj,  cgj,   x0],
 	    n:matrix_size(A)[1],
 	    for i:1 thru n do
 	    (
@@ -390,6 +394,8 @@ gauss_jacobi(A,   b,    init,    iter):=block(
 
 
 sor(A,   b,  w,   init,    iter):=block(
+
+	    [i,  j,   n,  l,   u,  L,  U,   d,   D,  D3,  N,  Tsor,  csor,  x0],
 	    n:matrix_size(A)[1],
 	    
 	    for i:1 thru n do
@@ -454,6 +460,8 @@ sor(A,   b,  w,   init,    iter):=block(
 
 
 gauss_seidel(A,    b,   init,    iter):=block(
+
+	    [i,   j,   n,   l,   L,   u,   U,   d,   D,   D2,   Tgs,  cgs,  x0],
 	    n:matrix_size(A)[1],
 	    for i:1 thru n do
 	    (
@@ -544,6 +552,7 @@ LP(a,   f,   x):=block
 
 dd_table(a,   f):=block
 	(
+	    [i,  j,   n,  s,  A,  table],
 	    n:length(a),
 	    for i:1 thru n do A[i,  1]:a[i],
 	    for i:1 thru n do A[i,  2]:f[i],
@@ -572,7 +581,7 @@ dd_table(a,   f):=block
 
 NP(a,    f,   x):=block(
 	    
-	    
+	        [i,   j,   s,   A,   table],
 	        n:length(a),
 	        for i:1 thru n do A[i,  1]:a[i],
 	        for i:1 thru n do A[i,  2]:f[i],
@@ -611,6 +620,7 @@ NP(a,    f,   x):=block(
 
 T(g,   a,   b):=block
 	(
+	    [f,   x],
 	    define(f(x),    g),
 	    return(((b-a)/2)*(f(a)+f(b)))
 );
@@ -635,6 +645,7 @@ T(g,   a,   b):=block
 
 Tc(g1,   a,   b,   n):=block
 	(
+	    [f,   x,   h,  s,  i,  ans],
 	    define(f(x),    g1),
 	    h:(b-a)/n,
 	    s:0.0,
@@ -662,6 +673,7 @@ Tc(g1,   a,   b,   n):=block
 
 S(g,   a,   b):=block
 	(
+	    [f,  x],
 	    define(f(x),    g),
 	    return( ((b-a)/6)*(f(a)+ (4*f((a+b)/2)) + f(b)))
 );
@@ -681,6 +693,7 @@ S(g,   a,   b):=block
 
 Sc(g1,   a,   b,   n):=block
 	(
+	    [m,   h,   odd,   even,  i,  ans],
 	    m:n/2,
 	    define(f(x),    g1),
 	    h:(b-a)/n,
