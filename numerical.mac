@@ -117,8 +117,10 @@ For comments, suggestions and the like, feel free to contact the author at
  
  bisect(g,   a,   b,   kmax,   e):=block(
  
- 	    [ya,  yb,  ym,  err,  iter,  m,   k,  x],
-	    define(f(x),  g), 
+ 	    [ya,  yb,  ym,  err,  iter,  m,   k],
+ 	    numer:true,
+ 	    local(f),
+	    define(f(x),   g),
 	    ya:f(a),
 	    yb:f(b),
 	    
@@ -155,7 +157,10 @@ For comments, suggestions and the like, feel free to contact the author at
 
  newton(g,   x0,   e,  d,  Nmax):=block
 	(
-	    [p,  x1,   i,  f,   x,  df],
+	    [p,  x1,   i,  x],
+	    numer:true,
+	    local(f,  df),
+	    
 	    define(f(x),   g),
 	    define(df(x),  diff(f(x),  x)),
 	    for i:1 thru Nmax do
@@ -185,6 +190,9 @@ For comments, suggestions and the like, feel free to contact the author at
 secant(g,   a,   b,   e,  Nmax):=block
 	(
 	    [fa,  fb,  d,  t,  t1,  i],
+	    numer:true,
+	    local(f), 
+	    
 	    define(f(x),   g),
 	    fa:f(a),
 	    fb:f(b),
@@ -220,6 +228,9 @@ secant(g,   a,   b,   e,  Nmax):=block
 
 regula(g,    a,   b,  kmax,   e):=block
 	(   [ya,  yb,  ym,   m,  k,  iter],
+	    numer:true,
+	    local(f),
+	    
 	    define(f(x),   g),
 	    ya:f(a),
 	    yb:f(b),
@@ -315,6 +326,7 @@ solve_by_lu(A,    b):=block
 	    
 	    ans1:['z=z,  'x=x ]            
 );
+
 
 /***********************************************************************
 
@@ -580,7 +592,7 @@ dd_table(a,   f):=block
 
 NP(a,    f,   x):=block(
 	    
-	        [i,   j,   s,   A,   table,   n,   sum1],
+	        [i,   j,   s,   A,   table,   n,  sum1],
 	        n:length(a),
 	        for i:1 thru n do A[i,  1]:a[i],
 	        for i:1 thru n do A[i,  2]:f[i],
@@ -625,11 +637,9 @@ T(g,   a,   b):=block
 
    
 (%i1) for k:2 next 2*k thru 150 do block(
-    		temp:Tc(sin(x),   0,   %pi,   k),
-    		print(k, "      ", temp)
+    	temp:Tc(sin(x),   0,   %pi,   k),
+    	print(k, "      ", temp)
     	);
-
-
 
 
 
@@ -640,6 +650,8 @@ T(g,   a,   b):=block
 Tc(g,   a,   b,   n):=block
 	(
 	    [x,   h,  s,  i,  ans],
+	    local(f),
+	    
 	    define(f(x),    g),
 	    h:(b-a)/n,
 	    s:0.0,
@@ -653,7 +665,8 @@ Tc(g,   a,   b,   n):=block
 
 
    
-(%i1)   S(1/x,    1.0,    2.0);
+(%i1)  S(1/x,    1.0,    2.0);
+	
 
 
 
@@ -663,6 +676,8 @@ Tc(g,   a,   b,   n):=block
 S(g,   a,   b):=block
 	(
 	    [x],
+	    local(f),
+	    
 	    define(f(x),    g),
 	    return( ((b-a)/6)*(f(a)+ (4*f((a+b)/2)) + f(b)))
 );
@@ -673,8 +688,8 @@ S(g,   a,   b):=block
 
    
 (%i1) for k:2 next 2*k thru 150 do block(
-    		temp:Sc(sin(x),   0,   %pi,   k),
-    		print(k, "      ", temp)
+    	temp:Sc(sin(x),   0,   %pi,   k),
+    	print(k, "      ", temp)
     	);
 
 
@@ -684,6 +699,8 @@ Sc(g,   a,   b,   n):=block
 	(
 	    [m,   h,   odd,   even,  i,  ans],
 	    m:n/2,
+	    local(f),
+	    
 	    define(f(x),    g),
 	    h:(b-a)/n,
 	    odd:0.0,
@@ -710,6 +727,8 @@ Sc(g,   a,   b,   n):=block
 eulerm(g,    a,     x0,    b,    N):=block
 	(
 	    [t,   x,   h,   t0],
+	    local(f),
+	    
 	    define(f(t,   x),    g),
 	    t0:a,
 	    h:(b-a)/N,
@@ -738,6 +757,8 @@ eulerm(g,    a,     x0,    b,    N):=block
 eulermod(g,    a,     x0,    b,    N):=block
 	(
 	    [t,   x,   h,   t0,   w,    wt],
+	    local(f),
+	    
 	    define(f(t,   x),    g),
 	    t0:a,
 	    h:(b-a)/N,
@@ -766,6 +787,8 @@ eulermod(g,    a,     x0,    b,    N):=block
 heun(g,    a,     x0,    b,    N):=block
 	(
 	    [t,   x,   h,   t0,   w,    wt],
+	    local(f),
+	    
 	    define(f(t,   x),    g),
 	    t0:a,
 	    h:(b-a)/N,
@@ -795,6 +818,8 @@ heun(g,    a,     x0,    b,    N):=block
 rk2(g,    a,     x0,    b,    N):=block
 	(
 	    [t,   x,   h,   t0,   w,    wt],
+	    local(f),
+	    
 	    define(f(t,   x),    g),
 	    t0:a,
 	    h:(b-a)/N,
