@@ -620,7 +620,7 @@ NP(a,    f,   x):=block(
 
 T(g,   a,   b):=block
 	(
-	    [f,   x],
+	    [x],
 	    define(f(x),    g),
 	    return(((b-a)/2)*(f(a)+f(b)))
 );
