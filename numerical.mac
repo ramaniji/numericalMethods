@@ -115,7 +115,8 @@ For comments, suggestions and the like, feel free to contact the author at
  
  
  
- bisect(g,   x,   a,   b,   kmax,   e):=block(
+bisect(g,   x,   a,   b,   kmax,   e):=block
+(
  
  	    [ya,  yb,  ym,  err,  iter,  m,   k],
  	    numer:true,
@@ -156,8 +157,8 @@ For comments, suggestions and the like, feel free to contact the author at
 
 **********************************************************************/
 
- newton(g,   x,   x0,   e,  d,  Nmax):=block
-	(
+newton(g,   x,   x0,   e,  d,  Nmax):=block
+(
 	    [p,  x1,   i],
 	    numer:true,
 	    local(f,  df),
@@ -189,7 +190,7 @@ For comments, suggestions and the like, feel free to contact the author at
 
 
 secant(g,   x,   a,   b,   e,  Nmax):=block
-	(
+(
 	    [fa,  fb,  d,  t,  t1,  i],
 	    numer:true,
 	    local(f), 
@@ -228,7 +229,7 @@ secant(g,   x,   a,   b,   e,  Nmax):=block
 
 
 regula(g,    x,    a,   b,  kmax,   e):=block
-	(   [ya,  yb,  ym,   m,  k,  iter],
+(   [ya,  yb,  ym,   m,  k,  iter],
 	    numer:true,
 	    local(f),
 	    
@@ -269,7 +270,7 @@ regula(g,    x,    a,   b,  kmax,   e):=block
 
 
 luFactor(A):=block
-	(
+(
 	    [n,   L,  U,  i,   j,    k,  ans],
 	    n:matrix_size(A)[1], 
 	    numer:true,
@@ -307,7 +308,7 @@ luFactor(A):=block
 
 
 solve_by_lu(A,    b):=block
-	(
+(
 	    [n,    L,   U,   z,   x,  ans1,   i,    j,   k],
 	    n:matrix_size(A)[1],
 	    numer:true,
@@ -347,7 +348,8 @@ solve_by_lu(A,    b):=block
 **********************************************************************/
 
 
-gauss_jacobi(A,   b,    init,    iter):=block(
+gauss_jacobi(A,   b,    init,    iter):=block
+(
 	    
 	    [i,  j,  n,  l,  L,  u,  U,  d,   D,  D1,   Tgj,  cgj,   x0,  x1],
 	    n:matrix_size(A)[1],
@@ -411,7 +413,8 @@ gauss_jacobi(A,   b,    init,    iter):=block(
 **********************************************************************/
 
 
-sor(A,   b,  w,   init,    iter):=block(
+sor(A,   b,  w,   init,    iter):=block
+(
 
 	    [i,  j,   n,  l,   u,  L,  U,   d,   D,  D3,  N,  Tsor,  csor,  x0,   x1],
 	    n:matrix_size(A)[1],
@@ -478,7 +481,8 @@ sor(A,   b,  w,   init,    iter):=block(
 **********************************************************************/
 
 
-gauss_seidel(A,    b,   init,    iter):=block(
+gauss_seidel(A,    b,   init,    iter):=block
+(
 
 	    [i,   j,   n,   l,   L,   u,   U,   d,   D,   D2,   Tgs,  cgs,  x0,  x1],
 	    n:matrix_size(A)[1],
@@ -544,17 +548,20 @@ gauss_seidel(A,    b,   init,    iter):=block(
 
 
 LP(a,   f,   x):=block
-	(
-	    [n,   i,   temp,  s,   j,   k],
+(
+	    [n,   i,   s,   k],
 	    numer:true,
 	    
+	    local(L),
 	    n:length(a),
 	    L(i,  x):=block
 	    (
+	    	[temp,   j],
 	        temp:1,
 	        for j:1 thru n do ( if(j#i) then temp:temp*(x-a[j])/(a[i]-a[j]) ),
 	        return(temp)    
 	    ),
+	    
 	    s:0,
 	    for k:1 thru n do s:s+(L(k,   x)*f[k]),
 	    return(s)
@@ -574,9 +581,10 @@ LP(a,   f,   x):=block
 **************************************************************************************/
 
 dd_table(a,   f):=block
-	(
+(
 	    [i,  j,   n,  s,  A,  table,   k,   p],
 	    n:length(a),
+	    local(A),
 	    numer:true,
 	    
 	    for i:1 thru n do A[i,  1]:a[i],
@@ -588,7 +596,7 @@ dd_table(a,   f):=block
 	        for p:1 thru n+2-j do A[p,    j]:(A[p+1,   j-1]-A[p,   j-1])/(A[p+1+s,   1]-A[p,   1]),
 	        s:s+1
 	    ),
-	    table:genmatrix(A,   n,   n+1),
+	    table:genmatrix(A,   n,   n+1),   
 	    table
 );
 
@@ -605,10 +613,12 @@ dd_table(a,   f):=block
 ******************************************************************************************************/
 
 
-NP(a,    f,   x):=block(
+NP(a,    f,   x):=block
+(
 	    
-	        [i,   j,   s,   A,   table,   n,  sum1,   k,   p],
+	        [i,   j,   s,   A,   table,   n,  s1,   k,   p],
 	        n:length(a),
+	        local(A),
 	        numer:true,
 	        
 	        for i:1 thru n do A[i,  1]:a[i],
@@ -621,12 +631,12 @@ NP(a,    f,   x):=block(
 	        ),
 	        table:genmatrix(A,   n,   n+1),
 	        
-	        sum1:table[1,   2],
+	        s1:table[1,   2],
 	        for i:3 thru n+1 do 
 	        (
-	            sum1:sum1+( table[1,   i]*product((x-table[k,   1]),    k,     1,     i-2)     )
+	            s1:s1+( table[1,   i]*product((x-table[k,   1]),    k,     1,     i-2)     )
 	        ),
-	        return(sum1)
+	        return(s1)
 );
 
 
@@ -746,7 +756,7 @@ Sc(g,   x,   a,   b,   n):=block
 
 
 eulerm(g,    t,    x,    a,     x0,    b,    N):=block
-	(
+(
 	    [h,   t0],
 	    local(f),
 	    numer:true,
