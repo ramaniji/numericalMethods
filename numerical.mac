@@ -115,7 +115,7 @@ For comments, suggestions and the like, feel free to contact the author at
  
  
  
- bisect(g,   a,   b,   kmax,   e):=block(
+ bisect(g,   x,   a,   b,   kmax,   e):=block(
  
  	    [ya,  yb,  ym,  err,  iter,  m,   k],
  	    numer:true,
@@ -156,9 +156,9 @@ For comments, suggestions and the like, feel free to contact the author at
 
 **********************************************************************/
 
- newton(g,   x0,   e,  d,  Nmax):=block
+ newton(g,   x,   x0,   e,  d,  Nmax):=block
 	(
-	    [p,  x1,   i,  x],
+	    [p,  x1,   i],
 	    numer:true,
 	    local(f,  df),
 	    
@@ -188,7 +188,7 @@ For comments, suggestions and the like, feel free to contact the author at
 **********************************************************************/
 
 
-secant(g,   a,   b,   e,  Nmax):=block
+secant(g,   x,   a,   b,   e,  Nmax):=block
 	(
 	    [fa,  fb,  d,  t,  t1,  i],
 	    numer:true,
@@ -227,7 +227,7 @@ secant(g,   a,   b,   e,  Nmax):=block
 ****************************************************************************************************/
 
 
-regula(g,    a,   b,  kmax,   e):=block
+regula(g,    x,    a,   b,  kmax,   e):=block
 	(   [ya,  yb,  ym,   m,  k,  iter],
 	    numer:true,
 	    local(f),
