@@ -118,8 +118,7 @@ For comments, suggestions and the like, feel free to contact the author at
 bisect(g,   x,   a,   b,   kmax,   e):=block
 (
  
- 	    [ya,  yb,  ym,  err,  iter,  m,   k],
- 	    numer:true,
+ 	    [ya,  yb,  ym,  err,  iter,  m,   k,   numer:true],
  	    local(f),
  	    
 	    define(f(x),   g),
@@ -159,8 +158,7 @@ bisect(g,   x,   a,   b,   kmax,   e):=block
 
 newton(g,   x,   x0,   e,  d,  Nmax):=block
 (
-	    [p,  x1,   i],
-	    numer:true,
+	    [p,  x1,   i,   numer:true],
 	    local(f,  df),
 	    
 	    define(f(x),   g),
@@ -191,8 +189,7 @@ newton(g,   x,   x0,   e,  d,  Nmax):=block
 
 secant(g,   x,   a,   b,   e,  Nmax):=block
 (
-	    [fa,  fb,  d,  t,  t1,  i],
-	    numer:true,
+	    [fa,  fb,  d,  t,  t1,  i,   numer:true],
 	    local(f), 
 	    
 	    define(f(x),   g),
@@ -229,8 +226,8 @@ secant(g,   x,   a,   b,   e,  Nmax):=block
 
 
 regula(g,    x,    a,   b,  kmax,   e):=block
-(   [ya,  yb,  ym,   m,  k,  iter],
-	    numer:true,
+(   		
+	    [ya,  yb,  ym,   m,  k,  iter,  numer:true],
 	    local(f),
 	    
 	    define(f(x),   g),
@@ -271,9 +268,8 @@ regula(g,    x,    a,   b,  kmax,   e):=block
 
 luFactor(A):=block
 (
-	    [n,   L,  U,  i,   j,    k,  ans],
+	    [n,   L,  U,  i,   j,    k,  ans,   numer:true],
 	    n:matrix_size(A)[1], 
-	    numer:true,
 	    
 	    L:zeromatrix(n,   n),
 	    U:zeromatrix(n,   n),
@@ -309,9 +305,9 @@ luFactor(A):=block
 
 solve_by_lu(A,    b):=block
 (
-	    [n,    L,   U,   z,   x,  ans1,   i,    j,   k],
+	    [n,    L,   U,   z,   x,  ans1,   i,    j,   k,    numer:true],
 	    n:matrix_size(A)[1],
-	    numer:true,
+
 	     
 	    L:rhs(luFactor(A)[1]),
 	    U:rhs(luFactor(A)[2]),
@@ -351,9 +347,9 @@ solve_by_lu(A,    b):=block
 gauss_jacobi(A,   b,    init,    iter):=block
 (
 	    
-	    [i,  j,  n,  l,  L,  u,  U,  d,   D,  D1,   Tgj,  cgj,   x0,  x1],
+	    [i,  j,  n,  l,  L,  u,  U,  d,   D,  D1,   Tgj,  cgj,   x0,  x1,   numer:true],
 	    n:matrix_size(A)[1],
-	    numer:true,
+	   
 	    
 	    for i:1 thru n do
 	    (
@@ -416,9 +412,8 @@ gauss_jacobi(A,   b,    init,    iter):=block
 sor(A,   b,  w,   init,    iter):=block
 (
 
-	    [i,  j,   n,  l,   u,  L,  U,   d,   D,  D3,  N,  Tsor,  csor,  x0,   x1],
+	    [i,  j,   n,  l,   u,  L,  U,   d,   D,  D3,  N,  Tsor,  csor,  x0,   x1,   numer:true],
 	    n:matrix_size(A)[1],
-	    numer:true,
 	    
 	    for i:1 thru n do
 	    (
@@ -484,9 +479,9 @@ sor(A,   b,  w,   init,    iter):=block
 gauss_seidel(A,    b,   init,    iter):=block
 (
 
-	    [i,   j,   n,   l,   L,   u,   U,   d,   D,   D2,   Tgs,  cgs,  x0,  x1],
+	    [i,   j,   n,   l,   L,   u,   U,   d,   D,   D2,   Tgs,  cgs,  x0,  x1,   numer:true],
 	    n:matrix_size(A)[1],
-	    numer:true,
+
 	    
 	    for i:1 thru n do
 	    (
@@ -549,8 +544,7 @@ gauss_seidel(A,    b,   init,    iter):=block
 
 LP(a,   f,   x):=block
 (
-	    [n,   i,   s,   k],
-	    numer:true,
+	    [n,   i,   s,   k,   numer:true],
 	    
 	    local(L),
 	    n:length(a),
@@ -582,10 +576,10 @@ LP(a,   f,   x):=block
 
 dd_table(a,   f):=block
 (
-	    [i,  j,   n,  s,  A,  table,   k,   p],
+	    [i,  j,   n,  s,  A,  table,   k,   p,   numer:true],
 	    n:length(a),
 	    local(A),
-	    numer:true,
+	    
 	    
 	    for i:1 thru n do A[i,  1]:a[i],
 	    for k:1 thru n do A[k,  2]:f[k],
@@ -616,10 +610,9 @@ dd_table(a,   f):=block
 NP(a,    f,   x):=block
 (
 	    
-	        [i,   j,   s,   A,   table,   n,  s1,   k,   p],
+	        [i,   j,   s,   A,   table,   n,  s1,   k,   p,   numer:true],
 	        n:length(a),
 	        local(A),
-	        numer:true,
 	        
 	        for i:1 thru n do A[i,  1]:a[i],
 	        for k:1 thru n do A[k,  2]:f[k],
@@ -653,8 +646,9 @@ NP(a,    f,   x):=block
 
 T(g,   x,   a,   b):=block
 (
+	    [numer:true],
 	    local(f),
-	    numer:true,
+	    
 	    
 	    define(f(x),    g),
 	    return(((b-a)/2)*(f(a)+f(b)))
@@ -678,9 +672,8 @@ T(g,   x,   a,   b):=block
 
 Tc(g,   x,   a,   b,   n):=block
 (
-	    [h,  s,  i,  ans],
+	    [h,  s,  i,  ans,   numer:true],
 	    local(f),
-	    numer:true,
 	    
 	    define(f(x),    g),
 	    h:(b-a)/n,
@@ -705,8 +698,8 @@ Tc(g,   x,   a,   b,   n):=block
 
 S(g,   x,    a,   b):=block
 (
+	    [numer:true],
 	    local(f),
-	    numer:true,
 	    
 	    define(f(x),    g),
 	    return( ((b-a)/6)*(f(a)+ (4*f((a+b)/2)) + f(b)))
@@ -727,10 +720,9 @@ S(g,   x,    a,   b):=block
 
 Sc(g,   x,   a,   b,   n):=block
 (
-	    [m,   h,   odd,   even,  i,  ans,  j],
+	    [m,   h,   odd,   even,  i,  ans,  j,   numer:true],
 	    m:n/2,
 	    local(f),
-	    numer:true,
 	    
 	    define(f(x),    g),
 	    h:(b-a)/n,
@@ -757,9 +749,8 @@ Sc(g,   x,   a,   b,   n):=block
 
 eulerm(g,    t,    x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0],
+	    [h,   t0,   numer:true],
 	    local(f),
-	    numer:true,
 	    
 	    define(f(t,   x),    g),
 	    t0:a,
@@ -788,9 +779,8 @@ eulerm(g,    t,    x,    a,     x0,    b,    N):=block
 
 eulermod(g,    t,    x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0,   w,    wt],
+	    [h,   t0,   w,    wt,   numer:true],
 	    local(f),
-	    numer:true,
 	    
 	    define(f(t,   x),    g),
 	    t0:a,
@@ -819,9 +809,9 @@ eulermod(g,    t,    x,    a,     x0,    b,    N):=block
 
 heun(g,    t,    x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0,   w,    wt],
+	    [h,   t0,   w,    wt,   numer:true],
 	    local(f),
-	    numer:true,
+
 	    
 	    define(f(t,   x),    g),
 	    t0:a,
@@ -851,9 +841,8 @@ heun(g,    t,    x,    a,     x0,    b,    N):=block
 
 rk2(g,    t,     x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0,   w,    wt],
+	    [h,   t0,   w,    wt,   numer:true],
 	    local(f),
-	    numer:true,
 	    
 	    define(f(t,   x),    g),
 	    t0:a,
