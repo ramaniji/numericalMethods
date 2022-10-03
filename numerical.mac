@@ -1,4 +1,4 @@
- /*************************************************************************
+ /**************************************************************************************************************************************
  
  			
  			
@@ -7,12 +7,12 @@
  			 
  			 
  
- ************************************************************************/
+**************************************************************************************************************************************/
  
  
  
  
- /************************************************************************
+/**************************************************************************************************************************************
  
  			COPYRIGHT NOTICE
 
@@ -31,7 +31,6 @@ The examples are from the books by :
         
 The author is grateful to Professor Barton Willis and Professor Richard
 Fateman for their advice and guidance.
-         
     
     
 This program is free software; you can redistribute it and/or modify it 
@@ -54,7 +53,7 @@ For comments, suggestions and the like, feel free to contact the author at
     
     
     
-************************************************************************/
+**************************************************************************************************************************************/
 
 
 
@@ -62,7 +61,7 @@ For comments, suggestions and the like, feel free to contact the author at
 
 
 
-/***********************************************************************
+/**************************************************************************************************************************************
 
 
   How to load this package
@@ -70,13 +69,13 @@ For comments, suggestions and the like, feel free to contact the author at
 (%i1) load(numerical);
 
 
-**********************************************************************/
+**************************************************************************************************************************************/
 
 
 
 
 
-/**********************************************************************
+/**************************************************************************************************************************************
 
 
 
@@ -103,82 +102,134 @@ For comments, suggestions and the like, feel free to contact the author at
  
  
  
- ********************************************************************/
+**************************************************************************************************************************************/
 
 
 
 
 
 
-/*******************************************************************************************************************************
+/**************************************************************************************************************************************
 
 
-   
-(%i1) bisect(x^3-2*sin(x),   x,   0.50,   2.00,   20,   0.0005);
+			
+			
+			
+			
+	If you are seriously interested in Maxima, I suggest you think about automating
+	calculations that are more symbolic.  
+			
+			
+			
+	           Professor Richard Fateman
+	           
+			
+			
+			
+			
+**************************************************************************************************************************************/
 
 
-*******************************************************************************************************************************/
 
 
 
- 
- 
- 
- 
-bisect(g,   x,   a,   b,   kmax,   e):=block
+etf(r,   var):=buildq
 (
- 
- 	    [ya,  yb,  ym,  err,  iter,  m,   k,   numer:true],
- 	    local(f),
- 	    
-	    define(f(x),   g),
-	    ya:f(a),
-	    yb:f(b),
-	    
-	    if(signum(ya)=signum(yb)) then ( print("fn has same sign at end points"))
-	    else
-	    (
-	        disp("iter                       m                                    ym                          error"),
-	        err:(b-a),
-	        for k:1 thru kmax do
-	        (
-	            err:err/2,
-	            m:a+err,
-	            ym:f(m),
-	            iter:k,
-	            print(iter, "                     ", m, "                ", float(ym),"              ", err),
-	            if(abs(err)<e) then (return("bisection has converged") ),
-	            if(signum(ym) # signum(ya)) then ( b:m, yb:ym )
-	            else (a:m,  ya:ym)
-	        )
-	    
-	    )
+	[r,   var],  
+	lambda([var],    r)
 );
 
 
-/***********************************************************************
-
-
-   
-(%i1) newton(x^3-2*x^2+x-3,   x,    3.0,  0.0001,  0.00001,   8);
 
 
 
-**********************************************************************/
-
-newton(g,   x,   x0,   e,  d,  Nmax):=block
+make_lambda(s):=block
 (
-	    [p,  x1,   i,   numer:true],
-	    local(f,  df),
+	[varsin:listofvars(s),     f],         /* make a list of all variables in s */
+	
+	if length(varsin)>1 then error("too many variables in", s),
+	etf(s,    varsin[1])
+);
+
+
+
+
+/**************************************************************************************************************************************
+
+
+
+
+bisect(x^2-2,    1,     2,    15,   0.001);
+
+
+The function bisect was written by Professor Richard Fateman
+
+
+
+
+**************************************************************************************************************************************/
+
+
+
+
+
+
+bisect(g,    a,    b,    kmax,   e):=block
+( 
+	[f: make_lambda(g),   ya,   yb,    m,     ym,    err,    iter,    success:false,    numer:true,    verbose_num:true],
 	    
-	    define(f(x),   g),
-	    define(df(x),  diff(f(x),  x)),
+	        
+	ya:apply(f,  [a]),
+	yb:apply(f,  [b]),
+	if (ya*yb>=0) then error("bisect fails because endpoints have same sign",  g,   a,   b),
+	if (verbose_num) then printf (true,"iter ~50tm~65tym~85terr"),        /*heading might be like this. Try printf and tabs.*/
+	        
+	err:(b-a),
+	for iter:1 thru kmax do
+	( 
+		err:err/2, 
+	        m:a+err, 
+	        ym:apply(f,  [m]),
+	        if verbose_num then printf (true,"~m~50t~m~65t~m~85t~m",  iter,  m,  ym,  err), 
+	            /*progress, so far */ 
+	        if abs(err)<e then(success:true,return()), /*success,return from loop*/
+	        if ym*ya<0 then (b:m,  yb:ym) else (a:m,   ya:ym) 
+	),
+	        /*outside of loop */
+	if success then return(ym) else error("bisect failed to converge using ~m steps", kmax)
+);
+
+
+
+
+
+
+/**************************************************************************************************************************************
+
+
+
+
+newton(x^3-2*x^2+x-3,    3,    0.0001,  0.00001,   8)
+
+
+
+
+**************************************************************************************************************************************/
+
+
+
+newton(g,   x0,   e,  d,  Nmax):=block
+(
+	    [f: make_lambda(g),    u,    df,    p,  x1,   i,   numer:true],
+	    local(df),
+     
+            df:make_lambda(diff(make_lambda(g)(u),     u)),
 	    for i:1 thru Nmax do
 	    (
-	        if(abs(df(x0)) < d) then (return("small derivative")),
-	        p:f(x0)/df(x0),
+	        if(abs(apply(df,   [x0])) < d) then (error("small derivative")),
+	        p:apply(f,  [x0])/apply(df,   [x0]),
 	        x1:x0-p,
-	        print(i,  "      ",  x1, "          ", f(x1)),
+	        print(i,  "      ",  x1, "          ",   apply(f,   [x1])),
 	        if(abs(p)<e) then (return("convergence")),
 	        x0:x1    
 	    )
@@ -186,28 +237,37 @@ newton(g,   x,   x0,   e,  d,  Nmax):=block
 
 
 
-/***********************************************************************
+
+
+
+
+
+/**************************************************************************************************************************************
+
 
 
    
-(%i1) secant(x^3+2*x^2-3*x-1,   x,    -2.0,  -3.0,  0.00001,   10);
+(%i1) secant(x^3+2*x^2-3*x-1,   -2,  -3,  0.00001,   10);
 
 
 
-**********************************************************************/
+
+**************************************************************************************************************************************/
 
 
-secant(g,   x,   a,   b,   e,  Nmax):=block
+
+secant(g,   a,   b,   e,  Nmax):=block
 (
-	    [fa,  fb,  d,  t,  t1,  i,   numer:true],
-	    local(f), 
+	    [f: make_lambda(g),    fa,  fb,   d,   t,  t1,  i,   numer:true],
+	     
 	    
-	    define(f(x),   g),
-	    fa:f(a),
-	    fb:f(b),
+	    
+	    fa:apply(f,  [a]),
+	    fb:apply(f,  [b]),
+	    printf(true,   "~m~60t~m~70t ~m",  "i",    "a",     "fa"),
 	    if(abs(fa) >abs(fb)) then (t:a, a:b, b:t, t1:fa, fa:fb, fb:t1), 
-	    print("0       ", a, "       ", fa),
-	    print("1       ", b, "        ",  fb),
+	    printf(true,   "~m~60t~m~70t ~m",  0,    a,     fa),
+	    printf(true,   "~m~60t~m~70t ~m",  1,    b,     fb),
 	    for i:2 thru Nmax do
 	    (
 	        if(abs(fa) >abs(fb)) then (t:a, a:b, b:t, t1:fa, fa:fb, fb:t1),
@@ -217,49 +277,71 @@ secant(g,   x,   a,   b,   e,  Nmax):=block
 	        d:d*fa,
 	        if(abs(d)<e)then(return("convergence")),
 	        a:a-d,
-	        fa:f(a),
-	        print(i, "     ", a, "     ",  fa)
+	        fa:apply(f,  [a]),
+	        printf(true,   "~m~60t~m~70t ~m",  i,    a,     fa)
+	        
 	    )
 );
 
 
-/****************************************************************************************************
+
+
+
+
+
+
+/**************************************************************************************************************************************
 
 
 
    
-(%i1) regula(x^3+2*x^2-3*x-1,   x,    1.0,  2.0,  20,   0.0005);
+(%i1) regula(x^3+2*x^2-3*x-1,   1,  2,  20,   0.0005);
 
 
 
-****************************************************************************************************/
+
+**************************************************************************************************************************************/
 
 
-regula(g,    x,    a,   b,  kmax,   e):=block
+
+
+
+
+regula(g,    a,   b,  kmax,   e):=block
 (   		
-	    [ya,  yb,  ym,   m,  k,  iter,  numer:true],
-	    local(f),
+	    [f: make_lambda(g),    ya,  yb,  ym,   m,   iter,  success:false,   numer:true, verbose_num:true],
 	    
-	    define(f(x),   g),
-	    ya:f(a),
-	    yb:f(b),
-	    if(signum(ya)=signum(yb))then( print("fn has same sign at end points"))
+	    
+	    ya:apply(f,  [a]),
+	    yb:apply(f,  [b]),
+	    if(ya*yb>=0)then  error("regula fails because endpoints have same sign",  g,   a,   b)
 	    else
 	    (
-	        disp("iter                       m                                         ym  "),
-	        for k:1 thru kmax do
+	        printf (true,"iter ~50tm~65tym"),
+	        for iter:1 thru kmax do
 	        (
 	            m:b-(yb*(b-a)/(yb-ya)),
-	            ym:f(m),
-	            iter:k,
-	            print(iter, "                     ", m, "                ", float(ym) ),
-	            if(abs(float(ym))<e)then( return("regula falsi method has converged") ),
-	            if(signum(ym) # signum(ya)) then ( b:m, yb:ym )
-	            else (a:m,  ya:ym)
-	        )
-	    
+	            ym:apply(f,  [m]),
+	            
+	            if verbose_num then printf(true,  "~m~40t~m~65t~m",	iter, 	m, 	ym),
+	            if(abs(ym)<e) then (success:true, return()),
+	            if(signum(ym) # signum(ya)) then ( b:m, yb:ym ) else (a:m,  ya:ym)
+	        ),
+	    	if success then return(ym) else error("regula-falsi method failed to converge using ~m steps", kmax)
 	    )
+	    
+	    
 );
+
+
+
+
+
+
+
+
+
+
 
 
 /**********************************************************************************************
@@ -411,7 +493,7 @@ gauss_jacobi(A,   b,    init,    iter):=block
    
 (%i1) A:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
 	b:matrix([10],   [-14],   [-33]);
-	start:matrix([0.0],   [0.0],   [0.0]);
+	start:matrix([0],   [0],   [0]);
 	sor(A,   b,   0.9,   start,   10); 
 	
 
@@ -477,7 +559,7 @@ sor(A,   b,  w,   init,    iter):=block
    
 (%i1) A1:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
 	b1:matrix([10],   [-14],   [-33]);
-	start:matrix([0.0],   [0.0],   [0.0]);
+	start:matrix([0],   [0],   [0]);
 	gauss_seidel(A1,    b1,   start,   10);
 	
 
@@ -750,7 +832,7 @@ Sc(g,   x,   a,   b,   n):=block
 
 
    
-(%i1) eulerm(1+(x/t),   t,    x,   1.0,   1.0,   6,    10);
+(%i1) eulerm(1+(x/t),   t,    x,   1,   1,   6,    10);
 
 
 
@@ -759,19 +841,21 @@ Sc(g,   x,   a,   b,   n):=block
 
 eulerm(g,    t,    x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0,   numer:true],
+	    [h,   t0,    sol,   numer:true],
 	    local(f),
 	    
 	    define(f(t,   x),    g),
 	    t0:a,
 	    h:(b-a)/N,
 	    x:x0,
+            sol:[],
 	    while(t0<=b) do
 	    (
-	        print(t0,  "---- ", x),
-	        x:x+(h*f(t0,   x)),
-	        t0:t0+h
-	    )
+                sol:endcons([t0,   x],    sol),
+                x:x+(h*f(t0,   x)),
+                t0:t0+h      
+	    ),
+            sol
 );
 
 
@@ -780,7 +864,7 @@ eulerm(g,    t,    x,    a,     x0,    b,    N):=block
 
 
    
-(%i1) eulermod(1+(x/t),    t,    x,    1.0,     1.0,    6,    10);
+(%i1) eulermod(1+(x/t),    t,    x,    1,     1,    6,    10);
 
 
 
@@ -789,20 +873,22 @@ eulerm(g,    t,    x,    a,     x0,    b,    N):=block
 
 eulermod(g,    t,    x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0,   w,    wt,   numer:true],
+	    [h,   t0,   w,    wt,   sol,    numer:true],
 	    local(f),
 	    
 	    define(f(t,   x),    g),
 	    t0:a,
 	    h:(b-a)/N,
 	    w:x0,
+            sol:[],
 	    while(t0<=b) do
 	    (
-	        print(t0,  "---- ", w),
+	        sol:endcons([t0,   w],    sol),
 	        wt:w+((h/2)*f(t0,   w)),
 	        w:w+(h*f(t0+(h/2),   wt)),
 	        t0:t0+h
-	    )
+	    ),
+            sol
 );
 
 
@@ -810,7 +896,7 @@ eulermod(g,    t,    x,    a,     x0,    b,    N):=block
 
 
    
-(%i1) heun(1+(x/t),    t,    x,  1.0,     1.0,    6,    10);
+(%i1) heun(1+(x/t),    t,    x,  1,     1,    6,    10);
 
 
 
@@ -819,7 +905,7 @@ eulermod(g,    t,    x,    a,     x0,    b,    N):=block
 
 heun(g,    t,    x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0,   w,    wt,   numer:true],
+	    [h,   t0,   w,    wt,    sol,   numer:true],
 	    local(f),
 
 	    
@@ -827,13 +913,15 @@ heun(g,    t,    x,    a,     x0,    b,    N):=block
 	    t0:a,
 	    h:(b-a)/N,
 	    w:x0,
+            sol:[],
 	    while(t0<=b) do
 	    (
-	        print(t0,  "---- ", w),
+	        sol:endcons([t0,   w],    sol),
 	        wt:w+(h*f(t0,   w)),
 	        w:w+(h/2)*(f(t0,   w)+f(t0+h,   wt)),
 	        t0:t0+h
-	    )
+	    ),
+            sol
 );
 
 
@@ -841,7 +929,7 @@ heun(g,    t,    x,    a,     x0,    b,    N):=block
 
 
    
-(%i1) rk2(1+(x/t),    t,    x,   1.0,     1.0,    6,    10);
+(%i1) rk2(1+(x/t),    t,    x,   1,     1,    6,    10);
 
 
 
@@ -851,21 +939,22 @@ heun(g,    t,    x,    a,     x0,    b,    N):=block
 
 rk2(g,    t,     x,    a,     x0,    b,    N):=block
 (
-	    [h,   t0,   w,    wt,   numer:true],
-	    local(f),
-	    
-	    define(f(t,   x),    g),
-	    t0:a,
-	    h:(b-a)/N,
-	    w:x0,
-	    while(t0<=b) do
-	    (
-	        print(t0,  "---- ", w),
-	        wt:w+((2*h/3)*f(t0,   w)),
-	        w:w+(h/4)*f(t0,   w)+(3*h/4)*f(t0+(2*h/3),    wt),
-	        t0:t0+h
-	    )
+        [h,   t0,   w,    wt,   sol,     numer:true],
+        local(f),
+        
+        define(f(t,   x),    g),
+        t0:a,
+        h:(b-a)/N,
+        w:x0,
+        sol:[],
+        while(t0<=b) do
+        (
+            sol:endcons([t0,   w],    sol),
+            wt:w+((2*h/3)*f(t0,   w)),
+            w:w+(h/4)*f(t0,   w)+(3*h/4)*f(t0+(2*h/3),    wt),
+            t0:t0+h
+        ),
+        sol
 );
-
 
 
