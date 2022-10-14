@@ -148,7 +148,7 @@ bisect(g,   x,   a,   b,   kmax,   e):=block
 	            iter:k,
 	            print(iter, "                     ", m, "                ", float(ym),"              ", err),
 	            if(abs(err)<e) then (return("bisection has converged") ),
-	            if(signum(ym) # signum(ya)) then ( b:m, yb:ym )
+	            if(ym*ya < 0) then ( b:m, yb:ym )
 	            else (a:m,  ya:ym)
 	        )
 	    
