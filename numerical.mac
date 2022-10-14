@@ -113,7 +113,7 @@ For comments, suggestions and the like, feel free to contact the author at
 
 
    
-(%i1) bisect(x^3-2*sin(x),   x,   0.50,   2.00,   20,   0.0005);
+(%i1) bisect(x^3-2*sin(x),   x,   0.50,   2,   20,   0.0005);
 
 
 *******************************************************************************************************************************/
@@ -147,7 +147,7 @@ bisect(g,   x,   a,   b,   kmax,   e):=block
 	            iter:k,
 	            print(iter, "                     ", m, "                ", float(ym),"              ", err),
 	            if(abs(err)<e) then (return("bisection has converged") ),
-	            if(signum(ym) # signum(ya)) then ( b:m, yb:ym )
+	            if(ym*ya < 0) then ( b:m, yb:ym )
 	            else (a:m,  ya:ym)
 	        )
 	    
@@ -159,7 +159,7 @@ bisect(g,   x,   a,   b,   kmax,   e):=block
 
 
    
-(%i1) newton(x^3-2*x^2+x-3,   x,    3.0,  0.0001,  0.00001,   8);
+(%i1) newton(x^3-2*x^2+x-3,   x,    3,  0.0001,  0.00001,   8);
 
 
 
@@ -189,7 +189,7 @@ newton(g,   x,   x0,   e,  d,  Nmax):=block
 
 
    
-(%i1) secant(x^3+2*x^2-3*x-1,   x,    -2.0,  -3.0,  0.00001,   10);
+(%i1) secant(x^3+2*x^2-3*x-1,   x,    -2,  -3,  0.00001,   10);
 
 
 
@@ -227,7 +227,7 @@ secant(g,   x,   a,   b,   e,  Nmax):=block
 
 
    
-(%i1) regula(x^3+2*x^2-3*x-1,   x,    1.0,  2.0,  20,   0.0005);
+(%i1) regula(x^3+2*x^2-3*x-1,   x,    1,  2,  20,   0.0005);
 
 
 
@@ -410,7 +410,7 @@ gauss_jacobi(A,   b,    init,    iter):=block
    
 (%i1) A:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
 	b:matrix([10],   [-14],   [-33]);
-	start:matrix([0.0],   [0.0],   [0.0]);
+	start:matrix([0],   [0],   [0]);
 	sor(A,   b,   0.9,   start,   10); 
 	
 
@@ -476,7 +476,7 @@ sor(A,   b,  w,   init,    iter):=block
    
 (%i1) A1:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
 	b1:matrix([10],   [-14],   [-33]);
-	start:matrix([0.0],   [0.0],   [0.0]);
+	start:matrix([0],   [0],   [0]);
 	gauss_seidel(A1,    b1,   start,   10);
 	
 
