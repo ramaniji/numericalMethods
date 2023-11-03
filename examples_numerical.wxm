@@ -1,0 +1,808 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: title   start ]
+Examples : numerical.mac
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load("/home/jvr/Downloads/numericalPackage/main/numerical.mac");
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratprint:false;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+The examples are from the books by :
+
+1.  Ward Cheney and David Kincaid :: Numerical Mathematics and Computing 
+2.  Brian  Bradie :: A Friendly Introduction to Numerical Analysis  
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Bisection Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisect(t^3-2*sin(t),    t,    0.50,   2.00,   20,   0.0005);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisect(sin(x),    x,    2,   4,   20,   0.0005);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisect(x^2-2,   x,    1,   2,   20,   0.0005);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+This examples was suggested by Professor Barton Willis
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bisect(x^3-2*x^2+x-%pi,   x,     2,    3,    10,    0.0001);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Newton's Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+newton(x^3-2*x^2+x-3,   x,    3,  0.0001,  0.00001,   8);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+newton(sin(x),   x,    3.0,  0.0001,  0.00001,   8);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+newton(x^2-2,   x,    1,  0.0001,  0.00001,   8);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+newton(x^3-2*x^2+x-%pi,   x,     3,  0.0001,  0.00001,   8);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Secant Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+secant(x^3+2*x^2-3*x-1,   x,    -2,  -3,  0.00001,   10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+secant(sin(x),   x,    1,    4,  0.00001,   10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+secant(x^2-2,   x,     1,     2,  0.00001,   10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Regula-Falsi Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regula(x^3+2*x^2-3*x-1,   x,    1,     2,  20,   0.0005);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regula(sin(x),   x,     2,     4,  20,   0.0005);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+regula(x^2-2,   x,    1,    2,  20,   0.0005);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+LU Factorization
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A:matrix([1,   2,   3],  [3,   5,   7],   [4,   6,   9]);
+luFactor(A);
+luFactor(A)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Solving by LU Factorization
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A:matrix([1,   2,   3],  [3,   5,   7],   [4,   6,   9]);
+b:matrix([1],  [2],  [3]);
+solve_by_lu(A,    b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A:matrix([2,   7,   5],   [6,   20,   10],   [4,   3,   0]);
+b1:matrix([14],  [36],  [7]);
+b2:matrix([-4],  [-16],  [-7]);
+b3:matrix([-3],  [-12],  [6]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+luFactor(A);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve_by_lu(A,   b1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve_by_lu(A,   b2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve_by_lu(A,   b3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Gauss-Jacobi Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
+b1:matrix([10],   [-14],   [-33]);
+start:matrix([0],   [0],   [0]);
+gauss_jacobi(A1,   b1,   start,   14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([2,    -1,   0],  [-1,    4,    2], [0,   2,   6]);
+b1:matrix([-1],   [3],   [5]);
+start:matrix([0],   [0],   [0]);
+gauss_jacobi(A1,   b1,   start,   14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+SOR Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
+b1:matrix([10],   [-14],   [-33]);
+start:matrix([0],   [0],   [0]);
+sor(A1,   b1,   0.9,   start,   10); 
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([2,    -1,   0],  [-1,    4,    2], [0,   2,   6]);
+b1:matrix([-1],   [3],   [5]);
+start:matrix([0],   [0],   [0]);
+sor(A1,   b1,   0.9,     start,   14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([2,    -1,   0],  [-1,    4,    2], [0,   2,   6]);
+b1:matrix([-1],   [3],   [5]);
+start:matrix([0],   [0],   [0]);
+sor(A1,   b1,   1.1,     start,   14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Gauss-Seidel Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
+b1:matrix([10],   [-14],   [-33]);
+start:matrix([0],   [0],   [0]);
+gauss_seidel(A1,    b1,   start,   10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([2,    -1,   0],  [-1,    4,    2], [0,   2,   6]);
+b1:matrix([-1],   [3],   [5]);
+start:matrix([0],   [0],   [0]);
+gauss_seidel(A1,   b1,   start,   14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Lagrange Interpolation
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+xval:[0,   1,    -1,    2,    -2]$
+yval:[-5,  -3,   -15,   39,   -9]$
+LP(xval,     yval,    x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ LP(xval,    yval,   3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+xval:[-3,   1,    2,    5]$
+yval:[-23,    -11,    -23,    1]$
+LP(xval,     yval,    x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+xval:[-1,   0,    1,    2]$
+yval:[5,    1,    1,    11]$
+LP(xval,   yval,   x);      
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Newton Interpolation
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dd_table([1,  3/2,   0,   2],   [3,   13/4,    3,    5/3]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dd_table([-1,  0,   1,   2,  -2,   3],   [5,   1,    1,    11,   5,   35]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+xval:[-1,   0,    1,    2]$
+yval:[5,    1,    1,    11]$
+NP(xval,   yval,   x);      
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+xval:[-1,  0,   1,   2,    -2,    3]$
+yval:[5,   1,    1,    11,   5,    35]$
+NP(xval,   yval,   x);      
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+NP(xval,   yval,   1.5);   
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratprint:false;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Trapezoidal Rule
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Basic Trapezoidal Rule
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+T(1/s,     s,    1.0,    2.0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Comparison
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+compareT(g,     x,     a,    b):=block(
+    [t,    v,     e,    numer:true],  
+    local(f),
+    define(f(x),    g),
+    t:T(f(x),   x,    a,    b),
+    v:integrate(f(x),    x,    a,   b),
+    e:abs(v-t),
+    print(t, "   ",   v,  "      ", e)
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+compareT(1/x,    x,   1,    2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+compareT(exp(-x),    x,   0,    1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Composite Trapzoidal Rule
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for k:2 next 2*k thru 150 do (
+    	temp:Tc(sin(x),    x,   0,   %pi,   k),
+    	print(k, "      ", temp)
+    	);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for k:2 next 2*k thru 150 do (
+    temp:Tc(sqrt(1+x^3),   x,     0.0,     1.0,   k),
+    print(k, "      ", temp)
+    );
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Simpson Rule
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Basic Simpson Rule
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+S(1/u,    u,   1.0,    2.0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+compareS(g,     x,     a,    b):=block(
+    [t,    v,     e,     numer:true],
+    local(f),
+    define(f(x),    g),
+    t:S(f(x),   x,    a,    b),
+    v:integrate(f(x),    x,    a,   b),
+    e:abs(v-t),
+    print(t, "   ",   v,  "      ", e)
+)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+compareS(1/x,    x,   1,    2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+compareS(exp(-x),    x,   0,    1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Composite Simpson rule
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for k:2 next 2*k thru 150 do block(
+    	temp:Sc(sin(t),   t,    0,   %pi,   k),
+    	print(k, "      ", temp)
+    	);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+for k:2 next 2*k thru 150 do block(
+    temp:Sc(sqrt(1+x^3),   x,    0,    1,   k),
+    print(k, "      ", temp)
+    );
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Euler Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eulerm(1+(x/t),    t,    x,    1.0,   1.0,   6,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eulerm((t/x),   t,    x,    0,   1,   5,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Second-Order Runge-Kutta Methods
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Modified-Euler Method
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eulermod(1+(x/t),    t,    x,   1.0,     1.0,    6,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eulermod((t/x),   t,    x,    0,   1,    5,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Heun's Method
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+heun(1+(x/t),    t,    x,    1.0,     1.0,    6,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+heun((t/x),   t,    x,    0,   1,    5,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Optimal RK2 Method
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rk2(1+(x/t),    t,     x,    1.0,     1.0,    6,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rk2((t/x),   t,    x,    0,   1,    5,    10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+A Check 
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A1:matrix([5,    1,   2],  [-3,    9,    4], [1,   2,   -7]);
+b1:matrix([10],   [-14],   [-33]);
+start:matrix([0],   [0],   [0]);
+gauss_jacobi(A1,   b1,   start,   14);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$
